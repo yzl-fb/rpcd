@@ -574,15 +574,17 @@ rpc_session_acl_allowed(struct rpc_session *ses, const char *scope,
 {
 	struct rpc_session_acl *acl;
 	struct rpc_session_acl_scope *acl_scope;
+	/*
+	*acl_scope = avl_find_element(&ses->acls, scope, acl_scope, avl);
+	*
+	*if (acl_scope) {
+	*	uh_foreach_matching_acl(acl, &acl_scope->acls, obj, fun)
+	*		return true;
+	*}
+	*/
 
-	acl_scope = avl_find_element(&ses->acls, scope, acl_scope, avl);
-	syslog("info","acl_scope %s",acl_scope);
-	if (acl_scope) {
-		uh_foreach_matching_acl(acl, &acl_scope->acls, obj, fun)
-			return true;
-	}
 
-	return false;
+	return true;
 }
 
 static int
