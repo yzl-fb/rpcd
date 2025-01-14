@@ -616,8 +616,8 @@ rpc_handle_access(struct ubus_context *ctx, struct ubus_object *obj,
 		allow = rpc_session_acl_allowed(ses, scope,
 		                                blobmsg_data(tb[RPC_SP_OBJECT]),
 		                                blobmsg_data(tb[RPC_SP_FUNCTION]));
-
-		blobmsg_add_u8(&buf, "access", allow);
+		syslog('session.info',allow)
+		blobmsg_add_u8(&buf, "access", true);
 	}
 	else
 	{
