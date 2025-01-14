@@ -1038,8 +1038,11 @@ rpc_login_setup_acl_file(struct rpc_session *ses, struct uci_section *login,
 
 			/* Only "read" and "write" permissions are defined */
 			if (strcmp(blobmsg_name(acl_perm), "read") &&
-				strcmp(blobmsg_name(acl_perm), "write"))
-				continue;
+				strcmp(blobmsg_name(acl_perm), "write")){
+					syslog('info',acl_perm);
+					syslog('info',blobmsg_name(acl_perm));			
+					continue;
+				}
 
 			/*
 			 * Check if the current user context specifies the current
