@@ -27,7 +27,6 @@
 #include <glob.h>
 #include <uci.h>
 #include <limits.h>
-#include <syslog.h>
 
 #ifdef HAVE_SHADOW
 #include <shadow.h>
@@ -616,7 +615,6 @@ rpc_handle_access(struct ubus_context *ctx, struct ubus_object *obj,
 		allow = rpc_session_acl_allowed(ses, scope,
 		                                blobmsg_data(tb[RPC_SP_OBJECT]),
 		                                blobmsg_data(tb[RPC_SP_FUNCTION]));
-		syslog('session.info',allow)
 		blobmsg_add_u8(&buf, "access", true);
 	}
 	else
@@ -1039,8 +1037,6 @@ rpc_login_setup_acl_file(struct rpc_session *ses, struct uci_section *login,
 			/* Only "read" and "write" permissions are defined */
 			if (strcmp(blobmsg_name(acl_perm), "read") &&
 				strcmp(blobmsg_name(acl_perm), "write")){
-					syslog('info',acl_perm);
-					syslog('info',blobmsg_name(acl_perm));			
 					continue;
 				}
 
@@ -1331,16 +1327,7 @@ int rpc_session_api_init(struct ubus_context *ctx)
 	struct rpc_session *ses;
 
 	static const struct ubus_method session_methods[] = {
-		UBUS_METHOD("create",  rpc_handle_create,  new_policy),
-		UBUS_METHOD("list",    rpc_handle_list,    sid_policy),
-		UBUS_METHOD("grant",   rpc_handle_acl,     acl_policy),
-		UBUS_METHOD("revoke",  rpc_handle_acl,     acl_policy),
-		UBUS_METHOD("access",  rpc_handle_access,  perm_policy),
-		UBUS_METHOD("set",     rpc_handle_set,     set_policy),
-		UBUS_METHOD("get",     rpc_handle_get,     get_policy),
-		UBUS_METHOD("unset",   rpc_handle_unset,   get_policy),
-		UBUS_METHOD("destroy", rpc_handle_destroy, sid_policy),
-		UBUS_METHOD("login",   rpc_handle_login,   login_policy),
+
 	};
 
 	static struct ubus_object_type session_type =
