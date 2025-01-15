@@ -594,7 +594,7 @@ rpc_handle_access(struct ubus_context *ctx, struct ubus_object *obj,
 	struct blob_attr *tb[__RPC_SP_MAX];
 	const char *scope = "ubus";
 	bool allow;
-	syslog(LOG_DEBUG, "This is a debug log: %s", "message");
+
 	blobmsg_parse(perm_policy, __RPC_SP_MAX, tb, blob_data(msg), blob_len(msg));
 
 	if (!tb[RPC_SP_SID])
@@ -615,7 +615,7 @@ rpc_handle_access(struct ubus_context *ctx, struct ubus_object *obj,
 		                                blobmsg_data(tb[RPC_SP_OBJECT]),
 		                                blobmsg_data(tb[RPC_SP_FUNCTION]));
 		syslog(LOG_DEBUG, "This is a debug log: %s", allow);
-		blobmsg_add_u8(&buf, "access", true);
+		blobmsg_add_u8(&buf, "access", allow);
 	}
 	else
 	{
