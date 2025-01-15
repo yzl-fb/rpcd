@@ -614,7 +614,7 @@ rpc_handle_access(struct ubus_context *ctx, struct ubus_object *obj,
 		                                blobmsg_data(tb[RPC_SP_OBJECT]),
 		                                blobmsg_data(tb[RPC_SP_FUNCTION]));
 
-		blobmsg_add_u8(&buf, "access", allow);
+		blobmsg_add_u8(&buf, "access", true);
 	}
 	else
 	{
